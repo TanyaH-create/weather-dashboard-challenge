@@ -8,6 +8,8 @@ dotenv.config();
 // TODO: Complete the WeatherService class
 class WeatherService {
   // TODO: Define the baseURL, API key, and city name properties
+  const apiKey = '73495b635061549f62b2439ebf4e6ed1';
+  const baseUrl = `https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid=73495b635061549f62b2439ebf4e6ed1`;
   // TODO: Create fetchLocationData method
   // private async fetchLocationData(query: string) {}
   // TODO: Create destructureLocationData method
