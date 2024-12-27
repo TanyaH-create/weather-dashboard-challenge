@@ -1,13 +1,22 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
-// TODO: Define an interface for the Coordinates object
-
-// TODO: Define a class for the Weather object
-
+//Define an interface for the Coordinates object
+interface Coordinates {
+  lat: number;
+  lon: number;
+}
+//Define a class for the Weather object
+class Weather {
+  temperature: number;
+  windSpeed: number;
+  humidity: number;
+}
 // TODO: Complete the WeatherService class
 class WeatherService {
   // TODO: Define the baseURL, API key, and city name properties
+  const apiKey = '73495b635061549f62b2439ebf4e6ed1';
+  const baseUrl = `https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid=73495b635061549f62b2439ebf4e6ed1`;
   // TODO: Create fetchLocationData method
   // private async fetchLocationData(query: string) {}
   // TODO: Create destructureLocationData method
