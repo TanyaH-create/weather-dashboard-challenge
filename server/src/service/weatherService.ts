@@ -13,7 +13,7 @@ class Weather {
   city: string;
   date: string;
   icon: string;
-  description: string;
+  iconDescription: string;
   tempF: number;  
   windSpeed: number;
   humidity: number;
@@ -21,7 +21,7 @@ class Weather {
     city: string,
     date: string,
     icon: string,
-    description: string,
+    iconDescription: string,
     tempF: number,  
     windSpeed: number,
     humidity: number
@@ -29,7 +29,7 @@ class Weather {
     this.city = city;
     this.date = date;
     this.icon = icon;
-    this.description = description;
+    this.iconDescription = iconDescription;
     this.tempF = tempF;   
     this.windSpeed = windSpeed;
     this.humidity = humidity;
