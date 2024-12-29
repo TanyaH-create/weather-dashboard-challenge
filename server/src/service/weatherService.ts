@@ -34,6 +34,7 @@ class Weather {
     this.windSpeed = windSpeed;
     this.humidity = humidity;
   }
+ 
 }
 
 // TODO: Complete the WeatherService class
@@ -43,7 +44,7 @@ class WeatherService {
   private baseURL = 'https://api.openweathermap.org/data/2.5/forecast';
   private apiKey = '73495b635061549f62b2439ebf4e6ed1';
 
-  // TODO: Create fetchLocationData method
+    // TODO: Create fetchLocationData method
   // This function is responsible for making an API call to the geocoding service
    private async fetchLocationData(query: string): Promise<any> {
     // build endpoint to get the city geocoding data
@@ -118,13 +119,24 @@ class WeatherService {
   }
 
   // TODO: Build parseCurrentWeather method
+  //helper function to format the date to mm/dd/yyy
+  private formatDate(dateString: string): string {
+    //create a new date object with the Date() constructor
+    const date = new Date(dateString);
+    //use date get methods to break the date and time apart (Jan is 0 so add 1 to make more readable)
+    //.padStart - length of 2 characters, use 0 if only 1 character
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
+    const day = date.getDate().toString().padStart(2, '0');
+    const year = date.getFullYear();
+    return `${month}/${day}/${year}`;
+  }
   // This function processes the weather data response from the API to extract relevant information about the current weather condition
   //It returns a structured object of type Weather
    private parseCurrentWeather(response: any): Weather {
     const weather = response.list[0];
     return new Weather(
       response.city.name,
-      new Date(weather.dt * 1000).toISOString(),
+      this.formatDate(weather.dt_txt),
       weather.weather[0].icon,
       weather.weather[0].description,     
       weather.main.temp,
@@ -146,7 +158,7 @@ class WeatherService {
     return dailyForecasts.map((item: any) => {
       return new Weather(
         item.city?.name || '',
-        new Date(item.dt * 1000).toISOString(),
+        this.formatDate(item.dt_txt),
         item.weather[0].icon,
         item.weather[0].description,
         item.main.temp,
