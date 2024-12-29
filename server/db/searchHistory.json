@@ -1,30 +1,14 @@
 [
   {
-    "name": "Cleveland",
-    "id": "1735492580890"
-  },
-  {
-    "name": "Land O'Lakes",
-    "id": "1735492602264"
-  },
-  {
-    "name": "Chula Vista",
-    "id": "1735492615986"
-  },
-  {
     "name": "Pittsburgh",
-    "id": "1735492626696"
-  },
-  {
-    "name": "San Diego",
-    "id": "1735499109318"
+    "id": "b860f131-9892-44dd-bd6b-46550c60f688"
   },
   {
     "name": "Orlando",
-    "id": "1735499584971"
+    "id": "5680a02e-18a6-44b2-b050-b7b5099dca87"
   },
   {
-    "name": "Houston",
-    "id": "1735500667680"
+    "name": "Cleveland",
+    "id": "2ca140df-8f7d-4bc3-9b92-af33543f7338"
   }
 ]

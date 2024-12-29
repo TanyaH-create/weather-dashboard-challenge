@@ -1,5 +1,6 @@
 import fs from 'fs/promises';
 import path from 'path';
+import { v4 as uuidv4 } from 'uuid';
 import { fileURLToPath } from 'node:url';
 const __filename = fileURLToPath(import.meta.url);  //contains URL path to this file
 const __dirname = path.dirname(__filename);         // derive the path of this file
@@ -56,11 +57,13 @@ class HistoryService {
     
     const cities = await this.read();
 
-    // Generate a unique ID for the new city using a UTC date/time stamp
-    const id = `${Date.now()}`;
-    const city = new City(name, id);
-
-    //check if the city already exists in the search history
+    // use city to create a new instance of city with a unique id
+    const city: City = {
+      name: name,
+      id: uuidv4(),
+    };
+    //check if the city already exists in the search history, if it exists continue without
+    //adding anything to the city array
     let cityExists = false;
     cities.forEach((city) => {
       if (city.name.toLowerCase() === name.toLowerCase())
