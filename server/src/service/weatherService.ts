@@ -12,22 +12,25 @@ interface Coordinates {
 class Weather {
   cityName: string;
   date: string;
-  temperature: number;
+  icon: string;
   description: string;
+  temperature: number;  
   windSpeed: number;
   humidity: number;
   constructor(
     cityName: string,
     date: string,
-    temperature: number,
+    icon: string,
     description: string,
+    temperature: number,  
     windSpeed: number,
     humidity: number
   ) {
     this.cityName = cityName;
     this.date = date;
-    this.temperature = temperature;
+    this.icon = icon;
     this.description = description;
+    this.temperature = temperature;   
     this.windSpeed = windSpeed;
     this.humidity = humidity;
   }
@@ -123,8 +126,9 @@ class WeatherService {
     return new Weather(
       response.city.name,
       new Date(weather.dt * 1000).toISOString(),
+      weather.weather[0].icon,
+      weather.weather[0].description,     
       weather.main.temp,
-      weather.weather[0].description,
       weather.wind.speed,
       weather.main.humidity
     );
@@ -139,8 +143,9 @@ class WeatherService {
       return new Weather(
         item.city?.name || '',
         new Date(item.dt * 1000).toISOString(),
-        item.main.temp,
+        item.weather[0].icon,
         item.weather[0].description,
+        item.main.temp,
         item.wind.speed,
         item.main.humidity
       );
