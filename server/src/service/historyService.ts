@@ -29,8 +29,7 @@ class HistoryService {
       //parse to an array of City objects
       return JSON.parse(data) as City[];
     } catch (error) {
-        console.error('Error reading hisory', error)
-        // If file doesn't exist, return an empty array
+        // If file doesn't exist, return an empty array - 
         return [];
       }  
    }
