@@ -10,27 +10,27 @@ interface Coordinates {
 
 //TO-DO Define a class for the Weather object: 
 class Weather {
-  cityName: string;
+  city: string;
   date: string;
   icon: string;
   description: string;
-  temperature: number;  
+  tempF: number;  
   windSpeed: number;
   humidity: number;
   constructor(
-    cityName: string,
+    city: string,
     date: string,
     icon: string,
     description: string,
-    temperature: number,  
+    tempF: number,  
     windSpeed: number,
     humidity: number
   ) {
-    this.cityName = cityName;
+    this.city = city;
     this.date = date;
     this.icon = icon;
     this.description = description;
-    this.temperature = temperature;   
+    this.tempF = tempF;   
     this.windSpeed = windSpeed;
     this.humidity = humidity;
   }
@@ -55,7 +55,7 @@ class WeatherService {
     }
     //return the geocoding data object from weather API
     const data = await response.json();
-    console.log('fetchLocationData JSON response:', data)
+    
     if (data.length === 0) {
       throw new Error('No location data found for the specified city');
     }
@@ -67,8 +67,7 @@ class WeatherService {
   // This function takes the location data returned from API and extracts the relevant co-ordinates
   // in form of latitude and longitude. It returns the coordinates as an instance of Coordinates.
   private destructureLocationData(locationData: any): Coordinates {
-    //return an instance of a  Coordinates object
-      console.log('Time to destructure the data', locationData)
+      //return an instance of a  Coordinates object
       //locationData is an array of objects so destructure
       const {lat, lon} = locationData[0];
       //return an object of type Coordinates
@@ -98,7 +97,7 @@ class WeatherService {
   //This function makes an API call to the weather service to get the location coordinates
   private async fetchAndDestructureLocationData(cityName: string): Promise<Coordinates> {
     const locationData = await this.fetchLocationData(cityName);
-    console.log('fetched location data', locationData);
+    
     return this.destructureLocationData(locationData);
   }
 
@@ -106,9 +105,9 @@ class WeatherService {
   // This function makes an API call to the weather service and returns a response object from 
   // the API
   private async fetchWeatherData(coordinates: Coordinates) {
-    console.log('In fetchWeatherData');
+    
     const url = this.buildWeatherQuery(coordinates);
-    console.log('buildWeatherQuery', url);
+    
     const response = await fetch(url);
 
     if (!response.ok) {
@@ -139,7 +138,12 @@ class WeatherService {
   // This function takes the current weather data and an array of forecast data and combines them into a single array that represents the weather forecast.
   // It returns an array of forecast objects, minus the current weather object, that can be used to display the weather forecast.
   private buildForecastArray(weatherData: any[]): Weather[] {
-    return weatherData.slice(1).map((item: any) => {
+    //API returns 5 day forecast with 3 hour steps.  Filter for one forecast per day at 12:00 noon
+    const dailyForecasts = weatherData.filter((item: any) => 
+      item.dt_txt.includes('12:00:00') // use dt_txt parameter to check time
+    );
+    //map the filtered data to Weather objects
+    return dailyForecasts.map((item: any) => {
       return new Weather(
         item.city?.name || '',
         new Date(item.dt * 1000).toISOString(),
@@ -160,12 +164,12 @@ class WeatherService {
   async getWeatherForCity(cityName: string): Promise<Weather[]> {
     //get the coordinates of the city
     const coordinates = await this.fetchAndDestructureLocationData(cityName);
-    console.log('The Location Data Coordinates have been fetched:', coordinates)
+    
     //use the coordinates to get the weather data
     const weatherData = await this.fetchWeatherData(coordinates);
     const currentWeather = await this.parseCurrentWeather(weatherData);
     const forecast = this.buildForecastArray(weatherData.list);
-
+    
     
     return [currentWeather, ...forecast];
   }
