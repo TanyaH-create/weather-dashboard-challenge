@@ -1,5 +1,10 @@
 import fs from 'fs/promises';
 import path from 'path';
+import { fileURLToPath } from 'node:url';
+const __filename = fileURLToPath(import.meta.url);  //contains URL path to this file
+const __dirname = path.dirname(__filename);         // derive the path of this file
+const filePath = path.join(__dirname, '../../db/searchHistory.json');
+
 
 // TODO: Define a City class with name and id properties
 class City {
@@ -13,14 +18,13 @@ class City {
 
 
 class HistoryService {
-  private filePath = path.resolve(__dirname, 'searhHistory.json');
 
   // TODO: Define a read method that reads from the searchHistory.json file
-  
+  //private filePath = path.resolve(__dirname, 'searhHistory.json');
   private async read(): Promise<City[]> {
     try {
       //read and store data
-      const data = await fs.readFile(this.filePath, 'utf-8');
+      const data = await fs.readFile(filePath, 'utf-8');
       //parse to an array of City objects
       return JSON.parse(data) as City[];
     } catch (error) {
@@ -36,7 +40,7 @@ class HistoryService {
       //convert to a JSON string  to be written to file: no replacer function, use 2 spaces
       const data = JSON.stringify(cities, null, 2);
       //write the data to the file HistoryService.filepath = searhHistory.json
-      await fs.writeFile(this.filePath, data, 'utf-8');
+      await fs.writeFile(filePath, data, 'utf-8');
     } catch (error) {
       console.error('Error writing search history', error);
     }

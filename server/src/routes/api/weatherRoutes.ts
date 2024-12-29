@@ -6,40 +6,49 @@ import WeatherService from '../../service/weatherService.js';
 
 
 // TODO: POST Request with city name to retrieve weather data
-router.post('/', (req: Request, res: Response) => {
-  //user enters city and it is passed in the request body
-  const {city} = req.body;
+router.post('/', async (req: Request, res: Response) => {
+  try {
+    //destructire 
+    const {cityName} = req.body;
 
-  // Validate request body to make sure it is a string
-  if (!city || typeof city !== 'string') {
+    // Validate request body 
+    if (!cityName) {
     //use client error 400 Bad Request
-    return res.status(400).json({ error: 'City name is required and must be a string.' });
-  }
-  // TODO: GET weather data from city name
-  //pass the city from the request body to the method in weatherService
-  const  weatherData = await WeatherService.getWeatherForCity(city);
-   
-  // TODO: save city to search history
-  await HistoryService.addCity(city);
+       return res.status(400).json({ error: 'City name is required.' });
+    }
+    // TODO: GET weather data from city name
+    //pass the city from the request body to the method in weatherService
+    const  weatherData = await WeatherService.getWeatherForCity(cityName);
+ 
+    // TODO: save city to search history
+    await HistoryService.addCity(cityName);
+
+    //return weatherData in the response
+    return res.json(weatherData);
+  } catch (error) {
+       console.error('Error fetching weather data', error);
+       return res.status(500).json({error: 'Failed to fetch weather data'})
+  }  
 });
 
 // TODO: GET search history
-router.get('/history', async (req: Request, res: Response) => {
+router.get('/history', async (_req: Request, res: Response) => {
   try {
+    //get the list of cities
     const cities = await HistoryService.getCities();
 
     //check if empty
     if (!cities || cities.length === 0) {
-      //use client error 404 - not found
-      return res.status(404).json({ success: false, message: 'No city history found.' });
+      //if there is no search history yet, return empty array
+      return res.status(200).json({ success: true, cities: []});
     }
 
-    //send response success 200 OK
-    res.status(200).json({ success: true, cities });
-  } catch (error: any) {
-    console.error('Error retrieving city history:', error.message);
+    //send response success 200 OK - return the cities data
+    return res.status(200).json({ success: true, cities });
+  } catch (error) {
+    console.error('Error retrieving city history:', error);
     //use server error 500 - common error code for internal server error  
-    res.status(500).json({ success: false, error: 'Failed to retrieve city history.' });
+    return res.status(500).json({ success: false, error: 'Failed to retrieve city history.' });
   }
 });
 
@@ -56,19 +65,20 @@ router.delete('/history/:id', async (req: Request, res: Response) => {
     }
 
     // Call HistoryService to remove the city
-    // 
-    const result = await HistoryService.removeCity(id);
-    //error handling - use client error 404 'not found'
-    if (!result) {
+    try {
+      await HistoryService.removeCity(id);
+      //use success code 200 OK
+      return res.status(200).json({ success: true, message: 'City deleted.' });
+    } catch (error) {
+      // If an error occurs return a 404 error
+      console.error('Error getting city', error)
       return res.status(404).json({ success: false, message: 'City not found.' });
     }
-    //susccessful use success code 200 OK
-    res.status(200).json({ success: true, message: 'City deleted.' });
   } catch (error) {
-    console.error('Error deleting city:', error.message);
-    //use internal server error code
-    res.status(500).json({ success: false, error: 'Internal server error.' });
-  }
+    console.error('Error deleting city:', error);
+    // Return a 500 Internal Server Error if something unexpected happens
+    return res.status(500).json({ success: false, error: 'Internal server error.' });
+  }    
 });
 
 export default router;
