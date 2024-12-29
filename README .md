@@ -13,22 +13,19 @@
 - [License](#license)
 
 ## Description
-The README Generator is a command-line application designed to help developers create a professional README.md file for their projects.  It uses the 'Inquirer' package to dynamically generate a README based on user input.
+The Weather Dashboard is an application that calls the OpenWeather API and renders weather conditions and a 5 day forecast for multiple cities.
 
 ## Features
 
-- License badge at the top of the README
-- Table of contents with links for the following sections:
-
-    - Description
-    - Installation
-    - Usage
-    - Contributing
-    - Tests
-    - Questions
-    - License
--  A link to the license information will be provided in the License secgtion
--  contact information under questions section includes email, gitHub username and link to gitHub account
+- Dashboard with form to enter search city. 
+- List of previously searched for cities that can be selected again.
+- Includes the following nformation for current and 5 day forecast conditions (5 day conditions are for noon of that day):
+  - City Name
+  - Date
+  - icon representation of the weather
+  - temperature
+  - humidity
+  - wind speed
 
 ## Installation
 1. Clone the repository
