@@ -141,10 +141,9 @@ const renderForecastCard = (forecast: any) => {
 
 const renderSearchHistory = async (searchHistory: any) => {
   const historyList = await searchHistory.json();
-
   if (searchHistoryContainer) {
     searchHistoryContainer.innerHTML = '';
-
+    
     if (!historyList.length) {
       searchHistoryContainer.innerHTML =
         '<p class="text-center">No Previous Search History</p>';
