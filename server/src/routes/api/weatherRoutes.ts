@@ -36,7 +36,6 @@ router.get('/history', async (_req: Request, res: Response) => {
   try {
     //get the list of cities
     const cities = await HistoryService.getCities();
-
     //check if empty
     if (!cities || cities.length === 0) {
       //if there is no search history yet, return empty array
@@ -44,7 +43,8 @@ router.get('/history', async (_req: Request, res: Response) => {
     }
 
     //send response success 200 OK - return the cities data
-    return res.status(200).json({ success: true, cities });
+    //return res.status(200).json({ success: true, cities });
+    return res.status(200).json(cities);
   } catch (error) {
     console.error('Error retrieving city history:', error);
     //use server error 500 - common error code for internal server error  

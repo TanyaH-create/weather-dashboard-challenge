@@ -60,13 +60,17 @@ class HistoryService {
     const id = `${Date.now()}`;
     const city = new City(name, id);
 
-    // Avoid duplicate cities (based on name)
-    if (cities.some((c) => c.name.toLowerCase() === name.toLowerCase())) {
-      throw new Error('City already exists in search history');
-    }
+    //check if the city already exists in the search history
+    let cityExists = false;
+    cities.forEach((city) => {
+      if (city.name.toLowerCase() === name.toLowerCase())
+        cityExists = true;
+    })
+    if (!cityExists) {
     //add current city to the cities array
     cities.push(city);
     await this.write(cities);
+    }
   }
 
 
