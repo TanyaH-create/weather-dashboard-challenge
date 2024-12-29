@@ -19,7 +19,6 @@ class City {
 
 class HistoryService {
 
-
   // TODO: Define a read method that reads from the searchHistory.json file
   //private filePath = path.resolve(__dirname, 'searhHistory.json');
   private async read(): Promise<City[]> {
