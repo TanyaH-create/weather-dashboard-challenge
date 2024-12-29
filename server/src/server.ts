@@ -6,6 +6,7 @@ dotenv.config();
 
 // Import the routes
 import routes from './routes/index.js';
+import weatherRoutes from './routes/api/weatherRoutes.js';
 
 const app = express();
 
@@ -19,7 +20,9 @@ app.use(express.json()); // Parse JSON bodies
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
 
 // TODO: Implement middleware to connect the routes
-app.use(routes);
+app.use('/api/weather', weatherRoutes);  // Mount weatherRoutes to the "/api/weather" endpoint
+app.use(routes); //Mount all other routes from index.js
+
 
 // Start the server on the port
 app.listen(PORT, () => console.log(`Listening on PORT: ${PORT}`));

@@ -10,21 +10,21 @@ interface Coordinates {
 
 //TO-DO Define a class for the Weather object: 
 class Weather {
-  city: string;
+  cityName: string;
   date: string;
   temperature: number;
   description: string;
   windSpeed: number;
   humidity: number;
   constructor(
-    city: string,
+    cityName: string,
     date: string,
     temperature: number,
     description: string,
     windSpeed: number,
     humidity: number
   ) {
-    this.city = city;
+    this.cityName = cityName;
     this.date = date;
     this.temperature = temperature;
     this.description = description;
@@ -38,7 +38,7 @@ class WeatherService {
 
   // TODO: Define the baseURL, API key, and city name properties
   private baseURL = 'https://api.openweathermap.org/data/2.5/forecast';
-  private apiKey = '73495b635061549f62b2439ebf4e6ed';
+  private apiKey = '73495b635061549f62b2439ebf4e6ed1';
 
   // TODO: Create fetchLocationData method
   // This function is responsible for making an API call to the geocoding service
@@ -47,12 +47,12 @@ class WeatherService {
     const url = this.buildGeocodeQuery(query);
     //fetch the city geocodeing data
     const response = await fetch(url);
-
     if (!response.ok) {
       throw new Error('Failed to fetch location data');
     }
     //return the geocoding data object from weather API
     const data = await response.json();
+    console.log('fetchLocationData JSON response:', data)
     if (data.length === 0) {
       throw new Error('No location data found for the specified city');
     }
@@ -65,9 +65,13 @@ class WeatherService {
   // in form of latitude and longitude. It returns the coordinates as an instance of Coordinates.
   private destructureLocationData(locationData: any): Coordinates {
     //return an instance of a  Coordinates object
+      console.log('Time to destructure the data', locationData)
+      //locationData is an array of objects so destructure
+      const {lat, lon} = locationData[0];
+      //return an object of type Coordinates
       return {
-          lat: locationData.lat,
-          lon: locationData.lon,
+          lat,
+          lon,
       }
   }
 
@@ -89,8 +93,9 @@ class WeatherService {
 
   // TODO: Create fetchAndDestructureLocationData method
   //This function makes an API call to the weather service to get the location coordinates
-  private async fetchAndDestructureLocationData(city: string): Promise<Coordinates> {
-    const locationData = await this.fetchLocationData(city);
+  private async fetchAndDestructureLocationData(cityName: string): Promise<Coordinates> {
+    const locationData = await this.fetchLocationData(cityName);
+    console.log('fetched location data', locationData);
     return this.destructureLocationData(locationData);
   }
 
@@ -98,7 +103,9 @@ class WeatherService {
   // This function makes an API call to the weather service and returns a response object from 
   // the API
   private async fetchWeatherData(coordinates: Coordinates) {
+    console.log('In fetchWeatherData');
     const url = this.buildWeatherQuery(coordinates);
+    console.log('buildWeatherQuery', url);
     const response = await fetch(url);
 
     if (!response.ok) {
@@ -145,9 +152,10 @@ class WeatherService {
   // This is the main function that orchestrates the entire process. It takes a city name as input, builds the necessary queries, fetches the location 
   // and weather data, and returns the final weather information.
   // It returns the current weather and forecast data for the specified city.
-  async getWeatherForCity(city: string): Promise<Weather[]> {
+  async getWeatherForCity(cityName: string): Promise<Weather[]> {
     //get the coordinates of the city
-    const coordinates = await this.fetchAndDestructureLocationData(city);
+    const coordinates = await this.fetchAndDestructureLocationData(cityName);
+    console.log('The Location Data Coordinates have been fetched:', coordinates)
     //use the coordinates to get the weather data
     const weatherData = await this.fetchWeatherData(coordinates);
     const currentWeather = await this.parseCurrentWeather(weatherData);
