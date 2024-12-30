@@ -1,73 +1,74 @@
-# weather-dashboard-challenge
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)] 
+# Weather Dashboard
+
+## Description
+The Weather Dashboard is a full-stack web application that allows users to search for current weather conditions and a 5-day forecast for multiple cties that is rebdered from the OpenWeather API. The cities serached for are saved and shown in a history list for quick access. 
 
 ## Table of Contents
-- [Description](#description)
 - [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Walkthrough](#walkthrough)
+- [Screenshot](#screenshot)
+- [API Routes](#apiroutes)
 - [Contributing](#contributing)
-- [Tests](#tests)
+- [Technology Used](#technologyused)
+- [Deployed Application](#deployed)
 - [Questions](#questions)
-- [License](#license)
 
-## Description
-The Weather Dashboard is an application that calls the OpenWeather API and renders weather conditions and a 5 day forecast for multiple cities.
 
 ## Features
 
-- Dashboard with form to enter search city. 
-- List of previously searched for cities that can be selected again.
-- Includes the following nformation for current and 5 day forecast conditions (5 day conditions are for noon of that day):
+1.  Search for a city to view the current weather information and to create a 5-Day forecast. 
+2.  Displays the following information
   - City Name
   - Date
-  - icon representation of the weather
-  - temperature
-  - humidity
-  - wind speed
+  - Weather icon
+  - Temperature
+  - Humidity
+  - Wind speed
+3. Saved search history with buttons for quick access to prevuiously searched cities
+4. Ability to delete cities from search history.
+
 
 ## Installation
-1. Clone the repository
-
-2. Navigate to the project directory 
+1. Clone the repository to your local machine:
    ```bash
-   cd ../Readme-File-Generator
+   git clone git@github.com:TanyaH-create/weather-dashboard-challenge.git
 
-3. Requires Node.js to be installed
-
-4. Requires a terminal environment with an editor installed
-
-5. Install 'inquirer' package
+3. Navigate to the project directory 
    ```bash
-   npm install inquirer
+   cd weather-dashboard-challenge
+
+4. Install required dependencies:
+   ```bash
+   npm install
+
+5. Create a .env file in the root server directory and add your OpenWeather API key:
+   ```bash
+   API_KEY=YOUR-OPENWEATHER-API-KEY
 
 6.  Run the application
     ```bash
-    node index.js
+    npm start
 
 ## Usage
-1. Run the application in the terminal:
-   ```bash
-   node index.js 
+1. Open the application in your browser
 
-2. Answer the prompts to provide details about your project.  Some prompts that require multi-line answers use
-   a text editor. Use markdown syntax when answering these secions in thetext editor. Saving and closing the editor completes the prompt.
+2. Enter the city name in the search bar to retrieve weather data.
 
-3. Once completed, the README.md file will be generated in the current directory.
+3. The current weather data and a 5-day forecast of weather will be displayed. The 5-day weather data is for noon-time.
 
+4. To retrieve data for a previously search city, click on the city in the history list.
 
-![Screenshot1stQuestionsAdj](https://github.com/user-attachments/assets/547b98e8-f5a6-4338-9849-13f5534ec6ae)    ![Screenshot2ndQuestion](https://github.com/user-attachments/assets/984209ff-5c1f-4bc6-aa27-2b9055210f86)
+5. To delete a city from the serach list use the delete button next to the city in the history list.
 
+## Screenshot
+![Screenshot 2024-12-29 192507](https://github.com/user-attachments/assets/086322ec-0db1-4c31-b494-5bc11a4f47af)
 
-![ScreenshotTextEditorAdj](https://github.com/user-attachments/assets/4cc03d03-675f-4ccd-a07f-0d266d203667)      ![ScreenshotLicenseAdj](https://github.com/user-attachments/assets/6e4693c7-5250-4453-bbbd-df8e8a83aacb)
+## API Routes
 
-![ScreenshotCompleteAdj](https://github.com/user-attachments/assets/256637a5-7a56-42d9-bcef-2aad720d0691)
-
-
-## Walkthrough
-
-https://drive.google.com/file/d/1HCRXeFDe4pAbOUVksy7iHu_ZFwOuzdwF/view?usp=sharing
+- GET /API/weather/history :Retrieve a list of saved cities
+- POST /api/weather :Save a city to search history and retrieve it's weather data
+- DELTE /api/weather/history/:id :Remove a city from the search history
 
 ## Contributing
 Contributions are welcome! Please follow these steps:
@@ -83,12 +84,17 @@ Contributions are welcome! Please follow these steps:
     git push origin feature-name
 5.	Submit a pull request.
 
-## Tests
-To test the application:
-1.	Ensure all dependencies are installed.
-2.	Run the application and verify the output:
-    ```bash
-    node index.js
+## Technology Used
+ - Frontend: HTML, CSS, Javascript
+ - Development: Typescript
+ - Backend: Node.js, Express.js
+ - Storage: JSON file for search history
+ - Deployment: Render
+
+## Deployed Application
+ - Live URL: 
+
+
 ## Questions
 
  If you have any questions, feel free to contact me at dougtanyah@gmail.com.
@@ -97,7 +103,5 @@ To test the application:
 
 
 
-## License
-This project is licensed under the MIT license. A complete version of the MIT license is available at [MIT](https://opensource.org/licenses/MIT).
-Any contribution made to this project will be icense under the MIT.
+
  
