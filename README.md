@@ -8,10 +8,10 @@ The Weather Dashboard is a full-stack web application that allows users to searc
 - [Installation](#installation)
 - [Usage](#usage)
 - [Screenshot](#screenshot)
-- [API Routes](#API Routes)
+- [API Routes](#api-routes)
 - [Contributing](#contributing)
-- [Technology Used](#technology used)
-- [Deployed Application](#deployed)
+- [Technology Used](#technolog- used)
+- [Deployed Application](#deployed-application)
 - [Questions](#questions)
 
 
