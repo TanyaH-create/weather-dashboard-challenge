@@ -62,7 +62,8 @@ The Weather Dashboard is a full-stack web application that allows users to searc
 5. To delete a city from the serach list use the delete button next to the city in the history list.
 
 ## Screenshot
-![Screenshot 2024-12-29 192507](https://github.com/user-attachments/assets/086322ec-0db1-4c31-b494-5bc11a4f47af)
+![Screenshot 2024-12-30 115306](https://github.com/user-attachments/assets/d7def6ea-ffba-4f29-ab6e-d77a89ea6b3d)
+
 
 ## API Routes
 
