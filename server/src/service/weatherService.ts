@@ -42,7 +42,7 @@ class WeatherService {
 
   // TODO: Define the baseURL, API key, and city name properties
   private baseURL = 'https://api.openweathermap.org/data/2.5/forecast';
-  private apiKey = '73495b635061549f62b2439ebf4e6ed1';
+  private apiKey = process.env.API_KEY || '';  //use API key from the .env file
 
     // TODO: Create fetchLocationData method
   // This function is responsible for making an API call to the geocoding service
